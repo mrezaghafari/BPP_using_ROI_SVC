@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+<head>
+  <title>Rate Video</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: white;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    #progress-bar {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 18px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 6px 12px;
+      border-radius: 8px;
+      z-index: 50;
+    }
+
+    #countdown-display {
+      font-size: 120px;
+      font-weight: bold;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      display: none;
+    }
+
+    #main-video {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      object-fit: contain;
+      top: 0;
+      left: 0;
+      display: none;
+      z-index: 1;
+    }
+
+    #rating-form {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      z-index: 20;
+    }
+
+    #rating-form p {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    #rating-form label {
+      margin: 0 10px;
+      font-size: 24px;
+    }
+
+    #countdown {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+
+    #start-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      padding: 12px 24px;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Progress display -->
+  <div id="progress-bar">
+    Video {{ current_index + 1 }} of {{ total_videos }}
+    ({{ ((current_index + 1) / total_videos * 100) | round(1) }}% complete)
+  </div>
+
+  <!-- Start interaction -->
+  <button id="start-button">Start</button>
+
+  <!-- Countdown numbers -->
+  <div id="countdown-display">3</div>
+
+  <!-- Main video -->
+  <video id="main-video" muted playsinline>
+    <source src="{{ url_for('static', filename='videos/' + video_name) }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Rating form -->
+  <form id="rating-form" action="{{ url_for('submit') }}" method="POST">
+    <input type="hidden" name="video_id" value="{{ video_name }}">
+    <p>Rate this video:</p>
+    <label><input type="radio" name="rating" value="1" required>1</label>
+    <label><input type="radio" name="rating" value="2">2</label>
+    <label><input type="radio" name="rating" value="3">3</label>
+    <label><input type="radio" name="rating" value="4">4</label>
+    <label><input type="radio" name="rating" value="5">5</label>
+    <br><br>
+    <button id="submit-button" type="submit">Submit</button>
+    <div id="countdown"></div>
+  </form>
+
+  <script>
+    let timeLeft = 10;
+    let countdownTimer;
+
+    function showRatingForm() {
+      const form = document.getElementById('rating-form');
+      const countdown = document.getElementById('countdown');
+      const video = document.getElementById('main-video');
+
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(err => console.warn('Failed to exit fullscreen:', err));
+      }
+
+      video.style.display = 'none';
+
+      setTimeout(() => {
+        form.style.display = 'block';
+        countdown.style.display = 'block';
+        countdown.textContent = `Time left: ${timeLeft}s`;
+
+        countdownTimer = setInterval(() => {
+          timeLeft--;
+          countdown.textContent = `Time left: ${timeLeft}s`;
+
+          if (timeLeft <= 0) {
+            clearInterval(countdownTimer);
+            countdown.textContent = 'Time is up. You can still submit.';
+            document.querySelectorAll('input[type=radio]').forEach(el => el.disabled = true);
+          }
+        }, 1000);
+      }, 300);
+    }
+
+    function startCountdownThenPlay() {
+      const display = document.getElementById('countdown-display');
+      const video = document.getElementById('main-video');
+      let count = 3;
+      display.style.display = 'block';
+
+      const interval = setInterval(() => {
+        display.textContent = count;
+        count--;
+        if (count < 0) {
+          clearInterval(interval);
+          display.style.display = 'none';
+
+          if (video.requestFullscreen) {
+            video.requestFullscreen().catch(err => console.warn(err));
+          } else if (video.webkitRequestFullscreen) {
+            video.webkitRequestFullscreen();
+          } else if (video.msRequestFullscreen) {
+            video.msRequestFullscreen();
+          }
+
+          video.style.display = 'block';
+          video.play().catch(err => console.error('Autoplay failed:', err));
+        }
+      }, 1000);
+    }
+
+    document.getElementById('start-button').addEventListener('click', () => {
+      const video = document.getElementById('main-video');
+      document.getElementById('start-button').style.display = 'none';
+      video.addEventListener('ended', showRatingForm);
+      startCountdownThenPlay();
+    });
+  </script>
+</body>
+</html>

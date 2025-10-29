@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head>
+  <title>MOS Video Quality Test</title>
+</head>
+<body>
+  <h1>Mean Opinion Score (MOS) Test</h1>
+  <form method="POST">
+    <label for="name">Enter your name to start:</label><br>
+    <input type="text" name="name" required><br><br>
+    {% if error %}
+      <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <input type="submit" value="Start Rating">
+  </form>
+</body>
+</html>
