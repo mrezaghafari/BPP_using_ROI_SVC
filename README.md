@@ -2,7 +2,7 @@
 
 ![packet wash in one go](pictures/BPPstreaming.png)
  
-This repository contains resources to evaluate the Packet Wash technique for scalable video streaming with gblurring technique for defining the ROI, especially in gaming scenarios.
+This repository contains resources to evaluate the Packet Wash technique for scalable video streaming with the gblurring technique for defining the ROI, especially in gaming scenarios.
 Requirements
 
 To use this repository, please ensure the following dependencies are installed:
