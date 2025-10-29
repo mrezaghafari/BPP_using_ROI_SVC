@@ -71,7 +71,7 @@ To evaluate the visual quality impact of the Packet Wash technique, this reposit
 
 ## 📁 Folder Overview
 
-- 📁 [`confs`](./confs): Contains configuration files used for Scalable Video Coding (SVC).
+- 📁 [`confs`](./Confs): Contains configuration files used for Scalable Video Coding (SVC).
 - 📁 [`results`](./results): Includes the results before and after applying the Packet Wash technique.
 
 ## 🙏 Acknowledgements
