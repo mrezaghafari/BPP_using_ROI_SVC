@@ -1,6 +1,6 @@
 # 🎮 QoE Evaluation of BPP Packet Wash Using ROI-based Scalable Video Coding
 
-![packet wash in one go](pictures/packet_wash.png)
+![packet wash in one go](pictures/BPPstreaming.png)
  
 This repository contains resources to evaluate the Packet Wash technique for scalable video streaming with gblurring technique for defining the ROI, especially in gaming scenarios.
 Requirements
