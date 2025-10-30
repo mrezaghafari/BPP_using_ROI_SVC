@@ -64,9 +64,9 @@ To evaluate the visual quality impact of the Packet Wash technique, this reposit
 
     vmaf --reference [location]/[file_high_fps].yuv --distorted [location]/[file_low_fps].yuv --width [width] --height [height] --bitdepth 8 --pixel_format 420 --model "path=[vmaf_location]/vmaf-3.0.0/model/vmaf_4k_v0.6.1.json" --threads 12 --output [location]/*.csv --csv --frame_cnt 300 --quiet
 
--FrameDiff
+-LPIPS
 
-    python subjective_evaluation.py [location]/[noWash].yuv [location]/[Washed_QL1].yuv [location]/[Washed_QL2].yuv [width] [height] 300
+    You need to run ```run_lpips.py``` with this template: # python run_lpips.py --video1 ref.yuv --video2 distorted.yuv --width 2560 --height 1440 --frames 300
 
 
 ## 📁 Folder Overview
