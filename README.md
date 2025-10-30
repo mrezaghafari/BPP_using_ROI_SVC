@@ -81,7 +81,7 @@ Thanks to Stuart Clayman for the BPP (Big Packet Protocol) implementation, avail
 
 Please write me an email if you want the (un)compressed video game files: ```mohammadreza.ghafari@loria.fr```
 
-This study was funded by ```PEPR Network of Future```, subproject Networks Architectures & In frastructure.
+This study was funded by ```PEPR Network of Future```, subproject Networks Architectures & Infrastructure.
 
 
     
