@@ -66,7 +66,7 @@ To evaluate the visual quality impact of the Packet Wash technique, this reposit
 
 -LPIPS
 
-    You need to run ```run_lpips.py``` with this template: # python run_lpips.py --video1 ref.yuv --video2 distorted.yuv --width 2560 --height 1440 --frames 300
+    python run_lpips.py --video1 ref.yuv --video2 distorted.yuv --width 2560 --height 1440 --frames 300
 
 
 ## 📁 Folder Overview
